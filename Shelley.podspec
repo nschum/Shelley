@@ -12,8 +12,20 @@ Pod::Spec.new do |s|
     :tag => "#{s.version}"
   }
 
-  s.ios.source_files = 'Source/Shared/**/*.{h,m}', 'Source/iOS/**/*.{h,m}'
-  s.osx.source_files = 'Source/Shared/**/*.{h,m}', 'Source/Mac/**/*.{h,m}'
-
   s.framework = 'CoreGraphics'
+
+  s.default_subspec = 'Core'
+
+  s.subspec 'Core' do |core|
+    core.source_files = 'Source/Shared/**/*.{h,m}'
+    core.ios.source_files = 'Source/iOS/**/*.{h,m}'
+    core.osx.source_files = 'Source/Mac/**/*.{h,m}'
+  end
+
+  # Subspec that registers itself with Frank
+  s.subspec 'Frank' do |frank|
+    frank.dependency 'Shelley/Core'
+    frank.source_files = 'Source/Frank/**/*.{h,m}'
+  end
+
 end
